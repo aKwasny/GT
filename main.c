@@ -3,54 +3,51 @@
 #include <stdlib.h>
 
 char *uzycie =
-		"Użycie: (opcjonalnie APPROX_BASE_SIZE=m) %s -p plik-z-punktami -g plik-out (wyjście) -o od_x -d do_x -n n_punktów\n"
-		"            Jeżeli plik z punktami został podany to\n"
+		"Użycie: (opcjonalnie APPROX_BASE_SIZE=m) %s -we plik(i)-wejściowe -p plik-pośredni (opcjonalnie) -wy plik_wyjściowy -n liczba-słów-w-n-gramie -i liczba-operacji \n"
+		"            Jeżeli plik z tekstem został podany to\n"
 		"               czyta z niego\n"
-		"               - liczba punktów powinna wynosić >= 4\n"
+		"               - liczba słów powinna wynosić >= 4\n"
 		"            endfi\n"
-		"            Jeżeli dany jest plik-out to\n"
-		"               program tworzy tabelę n-punktów z zakresu <od_x , do_x>\n"
-		"               - od_x - pierwsza dana z pliku z punktami do aproksymacji\n"
-		"               - do_x - jako ostatnia dana do aproksymacji\n"
-		"               - n-punktów domyślnie 100\n"
-		"               - n-punktów musi być > 1\n"
-		"            Jeżeli zdefiniowano m w APPROX_BASE_SIZE to taka będzie liczba funkcji bazowych.\n"
-		"               Domyślnie m jest definiowane w programie na podstawie algorytmu m = ((n-1)/2) - 1 (gdzie n - liczba punktów w pliku p).\n"
+		"            Jeżeli dany jest plik-wyjściowy to\n"
+		"               - "
+                "               - "
+                "               - "
+                "               - "
+                "               - "
+                "               - "
 		"            endif\n";
 
 int main (int argc, char **argv) {
 	int opt;								
 	char *in = NULL;
+	char *pos = NULL
 	char *out = NULL;
-	double odX = 0;
-	double doX = 0;
+	int i = 100;
 	int n = 100; 	/* domyślne ustawienie potrzebne do działania programu */
 	double *dane_a = NULL;
 	double *dane_b = NULL;
 
-	points_t pts;
-	pts.n = 0;
 
 	if (argv[1] == NULL) {
 		fprintf (stderr, uzycie, argv[0]);
 	}
 
-	while ((opt = getopt (argc, argv, "p:g:o:d:n:")) != -1) { 		/* opcje działanie + zapisywanie wyborów użytkownika */
+	while ((opt = getopt (argc, argv, "we:p:wy:n:i:")) != -1) { 		/* opcje działanie + zapisywanie wyborów użytkownika */
 		switch (opt) {
-		case 'p':
+		case 'we':
 			in = optarg;
 			break;
-		case 'g':
+		case 'p':
+			pos = optarg;
+			break;
+		case 'wy':
 			out = optarg;
 			break;
-		case 'o':
-			odX = atof (optarg);
-			break;
-		case 'd':
-			doX = atof (optarg);
-			break;
 		case 'n':
-			n = atoi (optarg);
+			n = atof (optarg);
+			break;
+		case 'i':
+			i = atoi (optarg);
 			break;
 		default:
 			fprintf (stderr, uzycie, argv[0]);
@@ -82,4 +79,5 @@ int main (int argc, char **argv) {
 		}
 		else
 			fclose (inf);		
-
+	}
+}
